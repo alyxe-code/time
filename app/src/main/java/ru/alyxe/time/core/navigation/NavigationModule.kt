@@ -4,7 +4,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val NavigationModule = module {
-    single { SharedFlowRouterImpl() }
-        .bind<SharedFlowRouter>()
+    single { StateFlowRouterImpl() }
+        .bind<StateFlowRouter>()
         .bind<Router>()
 }

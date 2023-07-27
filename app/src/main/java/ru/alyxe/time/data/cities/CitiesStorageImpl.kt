@@ -12,7 +12,14 @@ internal class CitiesStorageImpl : CitiesStorage {
 
     override fun selectedCity() = _selectedCity.asSharedFlow()
 
-    override fun changeCity(city: City) = _selectedCity.update { city }
+    override fun changeCity(id: Int): Boolean {
+        val city = Cities.firstOrNull { it.id == id }
+        if (city != null) {
+            _selectedCity.update { city }
+        }
+
+        return city != null
+    }
 
     override fun allCities() = flowOf(Cities)
 

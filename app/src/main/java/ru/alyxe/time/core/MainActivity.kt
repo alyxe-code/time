@@ -2,29 +2,30 @@ package ru.alyxe.time.core
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import ru.alyxe.time.core.navigation.NavigationModule
-import ru.alyxe.time.core.navigation.SharedFlowRouter
+import ru.alyxe.time.core.navigation.RouteEvent
+import ru.alyxe.time.core.navigation.StateFlowRouter
 import ru.alyxe.time.core.ui.screen
 import ru.alyxe.time.data.DataModule
 import ru.alyxe.time.data.network.NetworkModule
+import ru.alyxe.time.feature.cities.ui.CitiesScreen
 import ru.alyxe.time.feature.home.ui.HomeScreen
 
 class MainActivity : ComponentActivity() {
 
-    private val router by inject<SharedFlowRouter>()
+    private val router by inject<StateFlowRouter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +52,10 @@ class MainActivity : ComponentActivity() {
                         factory = ::HomeScreen
                     )
 
-                    composable("cities") {
-                        Text(text = "Cities")
-                    }
+                    screen(
+                        route = "cities",
+                        factory = ::CitiesScreen
+                    )
                 }
             }
 
@@ -66,18 +68,20 @@ class MainActivity : ComponentActivity() {
     private fun RouterEffect(
         navController: NavController,
     ) {
-        val route by router.sharedFlow.collectAsState(initial = "")
+        val routeEvent by router.routeEvent.collectAsState()
 
-        LaunchedEffect(route) {
-            if (route.isNotBlank()) {
-                navController.navigate(route)
+        LaunchedEffect(routeEvent) {
+            when (val event = routeEvent) {
+                is RouteEvent.Open -> navController.navigate(event.route)
+                is RouteEvent.Pop -> navController.popBackStack()
+                is RouteEvent.Initial -> Unit
             }
         }
-    }
 
-    override fun onBackPressed() {
-        if (!router.pop()) {
-            super.onBackPressed()
+        BackHandler(
+            enabled = routeEvent !is RouteEvent.Initial
+        ) {
+            router.pop()
         }
     }
 }

@@ -7,7 +7,7 @@ interface CitiesStorage {
 
     fun selectedCity(): Flow<City>
 
-    fun changeCity(city: City)
+    fun changeCity(id: Int): Boolean
 
     fun allCities(): Flow<List<City>>
 
