@@ -1,4 +1,4 @@
-package ru.alyxe.time.feature.home
+package ru.alyxe.time.feature.home.ui
 
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind

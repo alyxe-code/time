@@ -1,4 +1,4 @@
-package ru.alyxe.time.feature.home
+package ru.alyxe.time.feature.home.ui
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

@@ -1,4 +1,4 @@
-package ru.alyxe.time.feature.home
+package ru.alyxe.time.feature.home.ui
 
 import androidx.compose.runtime.Immutable
 import ru.alyxe.time.entity.ui.CityUM

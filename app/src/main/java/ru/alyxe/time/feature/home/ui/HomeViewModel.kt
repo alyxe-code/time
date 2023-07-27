@@ -1,4 +1,4 @@
-package ru.alyxe.time.feature.home
+package ru.alyxe.time.feature.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

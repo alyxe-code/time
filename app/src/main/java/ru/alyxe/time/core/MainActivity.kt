@@ -10,7 +10,7 @@ import org.koin.android.ext.android.getKoin
 import ru.alyxe.time.core.ui.screen
 import ru.alyxe.time.data.DataModule
 import ru.alyxe.time.data.network.NetworkModule
-import ru.alyxe.time.feature.home.HomeScreen
+import ru.alyxe.time.feature.home.ui.HomeScreen
 
 class MainActivity : ComponentActivity() {
 
