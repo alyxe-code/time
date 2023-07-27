@@ -2,6 +2,7 @@ package ru.alyxe.time.feature.home.domain
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -9,6 +10,7 @@ import kotlinx.coroutines.flow.retry
 import ru.alyxe.time.core.domain.SharedFlowInteractor
 import ru.alyxe.time.data.cities.CitiesStorage
 import ru.alyxe.time.data.repo.api.TimeRepository
+import java.time.LocalDateTime
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -32,6 +34,7 @@ class ListenSelectedCityAndTimeInteractor(
     private fun dateTimeFlow(
         timeZone: String
     ) = tickerFlow(100.milliseconds)
+        .distinctUntilChangedBy { LocalDateTime.now().minute }
         .map { repository.fetchTime(timeZone) }
         .retry()
 
