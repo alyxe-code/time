@@ -3,7 +3,10 @@ package ru.alyxe.time.core
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import ru.alyxe.time.core.ui.ScreenStarter
+import androidx.compose.material3.MaterialTheme
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import ru.alyxe.time.core.ui.screen
 import ru.alyxe.time.feature.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
@@ -12,7 +15,17 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            ScreenStarter(::HomeScreen)
+            MaterialTheme {
+                NavHost(
+                    navController = rememberNavController(),
+                    startDestination = "home",
+                ) {
+                    screen(
+                        route = "home",
+                        factory = ::HomeScreen
+                    )
+                }
+            }
 
         }
     }
