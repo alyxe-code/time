@@ -1,3 +1,5 @@
 package ru.alyxe.time.feature.home
 
-internal class HomeViewModel
+import androidx.lifecycle.ViewModel
+
+internal class HomeViewModel : ViewModel()
