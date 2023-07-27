@@ -2,6 +2,7 @@ package ru.alyxe.time.feature.home.ui
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import ru.alyxe.time.core.navigation.Router
 import ru.alyxe.time.entity.ui.CityUM
 import ru.alyxe.time.entity.ui.LocalDateTimeUM
 import ru.alyxe.time.entity.ui.toUiModel
@@ -17,6 +18,7 @@ internal interface HomeWiring {
 }
 
 internal class HomeWiringImpl(
+    private val router: Router,
     private val useCase: ListenSelectedCityAndTimeUseCase,
 ) : HomeWiring {
 
@@ -27,7 +29,7 @@ internal class HomeWiringImpl(
         get() = useCase.sharedFlow.map { it.dateTime.toUiModel() }
 
     override fun openCitiesList() {
-        TODO("Not yet implemented")
+        router.navigate("cities")
     }
 
 }
